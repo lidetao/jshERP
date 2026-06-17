@@ -1,0 +1,48 @@
+# =============================================
+# jshERP 生产环境配置
+# 敏感信息由环境变量注入，此文件不含密码，可安全提交 Git
+# =============================================
+
+server:
+  port: 9999
+  servlet:
+    session:
+      timeout: 36000
+    context-path: /jshERP-boot
+  tomcat:
+    basedir: /opt/tmp/tomcat
+
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:mysql://127.0.0.1:3306/jsh_erp?useUnicode=true&characterEncoding=utf8&useCursorFetch=true&defaultFetchSize=500&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=true}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD}
+  redis:
+    host: ${REDIS_HOST:redis}
+    port: 6379
+    password: ${REDIS_PASSWORD}
+  servlet:
+    multipart:
+      max-file-size: 10485760
+      max-request-size: 10485760
+
+mybatis-plus:
+  mapper-locations: classpath:./mapper_xml/*.xml
+
+manage:
+  roleId: 10
+
+tenant:
+  userNumLimit: 1000000
+  tryDayLimit: 3000
+
+plugin:
+  runMode: prod
+  pluginPath: plugins
+  pluginConfigFilePath: pluginConfig
+
+file:
+  uploadType: 1
+  path: /opt/jshERP/upload
+  exportTmp: /opt/jshERP/export
